@@ -1,24 +1,3 @@
-.header {
-
-    height:100px;
-    background-color: antiquewhite;
-    top: 0;
-    left: 0;
-    position: absolute;
-    right: 0;
-    color: white;
-    padding: auto;
-}
-
-.footer {
-    height: 100px;
-    background-color: antiquewhite;
-    bottom: 0;
-    left: 0;
-    padding: auto;
-    position: absolute;
-    right: 0;
-}
 div {
     display: block;
 }
@@ -73,4 +52,12 @@ td {
 }
 .table_login {
     width: 400px;
+}
+
+.main_part {
+    width: 95%;
+    height: 90%;
+    position: relative;
+    margin: auto;
+    top: 70px;
 }
