@@ -1,0 +1,87 @@
+html, body {
+    height: 100%
+}
+
+.header {
+
+    height: 100px;
+    background-color: antiquewhite;
+    top: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    color: white;
+    padding: auto;
+}
+
+.footer {
+    height: 100px;
+    background-color: antiquewhite;
+    bottom: 0;
+    left: 0;
+    padding: auto;
+    position: relative;
+    right: 0;
+}
+
+div {
+    display: block;
+}
+
+.logo {
+    padding: 0px 30px 0px 30px;
+    height: 50px;
+    float: left;
+}
+
+.logo P, .logo H1, .logo div.p {
+    font: 11px tahoma;
+    color: #630;
+    margin: 0px;
+    line-height: 25px;
+}
+
+.usermenu {
+    color: saddlebrown;
+    font: 20px tahoma;
+}
+
+A {
+    text-decoration-line: none;
+    text-decoration-style: initial;
+    text-decoration-color: initial;
+    color: saddlebrown;
+}
+
+span {
+    float: top;
+}
+
+.text {
+    background-color: #F9F9F9;
+    border-color: #CCCCCC;
+    border-width: 1px;
+    border-style: Dashed;
+    color: #444444;
+    width: 295px;
+    font-family: Tahoma;
+    font-size: 15px;
+}
+
+table {
+    border: 4px;
+    padding: 60px;
+    margin: auto;
+}
+
+td {
+    padding: 5px 3px;
+}
+
+.table_registration {
+    width: 600px;
+}
+
+.table_login {
+    width: 400px;
+}
