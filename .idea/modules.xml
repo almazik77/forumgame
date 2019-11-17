@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/forumgame.iml" filepath="$PROJECT_DIR$/.idea/forumgame.iml" />
+      <module fileurl="file://$PROJECT_DIR$/forumgame.iml" filepath="$PROJECT_DIR$/forumgame.iml" />
+
     </modules>
   </component>
 </project>

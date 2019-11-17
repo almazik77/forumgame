@@ -1,3 +1,29 @@
+html, body {
+    height: 100%
+}
+
+.header {
+
+    height: 100px;
+    background-color: antiquewhite;
+    top: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    color: white;
+    padding: auto;
+}
+
+.footer {
+    height: 100px;
+    background-color: antiquewhite;
+    bottom: 0;
+    left: 0;
+    padding: auto;
+    position: relative;
+    right: 0;
+}
+
 div {
     display: block;
 }
@@ -23,10 +49,10 @@ A {
     text-decoration-color: initial;
     color: saddlebrown;
 }
-span {
-  float: top;
-}
 
+span {
+    float: top;
+}
 .text {
     background-color: #F9F9F9;
     border-color: #CCCCCC;
