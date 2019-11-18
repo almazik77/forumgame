@@ -2,47 +2,14 @@ html, body {
     height: 100%
 }
 
-.header {
-
-    height: 100px;
-    background-color: antiquewhite;
-    top: 0;
-    left: 0;
-    position: absolute;
-    right: 0;
-    color: white;
-    padding: auto;
-}
-
-.footer {
-    height: 100px;
-    background-color: antiquewhite;
-    bottom: 0;
-    left: 0;
-    padding: auto;
-    position: relative;
-    right: 0;
-}
-
 div {
     display: block;
 }
-.logo {
-    padding: 0px 30px 0px 30px;
-    height: 50px;
-    float: left;
+h1{
+    font-family: Tahoma;
+    color: darkred;
 }
 
-.logo P, .logo H1, .logo div.p {
-    font: 11px tahoma;
-    color: #630;
-    margin: 0px;
-    line-height: 25px;
-}
-.usermenu {
-    color: saddlebrown;
-    font: 20px tahoma;
-}
 A {
     text-decoration-line: none;
     text-decoration-style: initial;
@@ -53,6 +20,7 @@ A {
 span {
     float: top;
 }
+
 .text {
     background-color: #F9F9F9;
     border-color: #CCCCCC;
@@ -73,9 +41,11 @@ table {
 td {
     padding: 5px 3px;
 }
+
 .table_registration {
     width: 600px;
 }
+
 .table_login {
     width: 400px;
 }
@@ -87,3 +57,19 @@ td {
     margin: auto;
     top: 70px;
 }
+
+main {
+    min-height: 85%;
+}
+
+._button {
+    background-color: #EAEAEA;
+    border-color: #CCCCCC;
+    border-width: 1px;
+    border-style: Dashed;
+    color: #444444;
+    font-family: Tahoma;
+    font-weight: bold;
+    font-size: 20px;
+}
+
