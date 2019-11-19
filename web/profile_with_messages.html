@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type='text/html' src='main.html'></script>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script>
+        $(function () {
+            $("#header").load("main.html #header");
+            $("#footer").load("main.html #footer");
+        });
+    </script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+
+</head>
+<body>
+<div id="header"></div>
+
+<main>
+
+    <div class="jumbotron-fluid row" style="padding: 5%">
+
+        <div class="col-2 ">
+            <a href="/"><span>Профиль</span></a>
+            <hr>
+            <a href="/"><span>Мои игры</span></a>
+            <hr>
+            <a href="/"><span>Сообщения</span></a>
+            <hr>
+            <a href="/"><span>Настройки</span></a>
+            <hr>
+        </div>
+        <div class="col-10">
+
+            <div class="container py-5 px-md-5 z-depth-1" >
+                <!--Section: Content-->
+                <section class="text-center text-lg-left dark-grey-text" style="border: groove">
+
+                    <div class="media d-block d-md-flex mt-4">
+                        <img class="card-img-64 rounded z-depth-1 d-flex mx-auto mb-3"
+                             src="images/logo1.png"
+                             alt="">
+                        <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                            <p class="font-weight-bold my-0">
+                                <a href="#"> <%=phrase.getUserId()%></a>
+                            </p>
+                            <%=phrase.getText()%>
+
+                        </div>
+                    </div>
+                </section>
+
+                <section class="text-center text-lg-left dark-grey-text" style="border: groove">
+
+                    <div class="media d-block d-md-flex mt-4">
+                        <img class="card-img-64 rounded z-depth-1 d-flex mx-auto mb-3"
+                             src="images/logo1.png"
+                             alt="">
+                        <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                            <p class="font-weight-bold my-0">
+                                <a href="#"> <%=phrase.getUserId()%></a>
+                            </p>
+                            <%=phrase.getText()%>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    </div>
+
+</main>
+<div id="footer"></div>
+
+</body>
+</html>
