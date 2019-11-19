@@ -21,7 +21,6 @@ public class NewGameServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long userId = (Long) req.getSession().getAttribute("userId");
 
-
         if (userId == null) {
 
             for (Cookie cookie : req.getCookies()) {
@@ -40,7 +39,7 @@ public class NewGameServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/games");
         }
 
-        req.getRequestDispatcher(req.getContextPath() + "/new_game.jsp").forward(req, resp);
+        req.getRequestDispatcher(req.getContextPath() + "/jsp/new_game.jsp").forward(req, resp);
     }
 
     @Override

@@ -8,6 +8,7 @@ public class User {
     private Optional<String> mail;
     private String password;
     private String role;
+    private String iconPath;
 
 
     public User(Builder builder) {
@@ -16,6 +17,7 @@ public class User {
         this.mail = builder.mail;
         this.password = builder.password;
         this.role = builder.role;
+        this.iconPath = builder.iconPath;
     }
 
 
@@ -25,6 +27,7 @@ public class User {
         private Optional<String> mail;
         private String password;
         private String role;
+        private String iconPath;
 
         public Builder role(String role) {
             this.role = role;
@@ -51,6 +54,10 @@ public class User {
             return this;
         }
 
+        public Builder iconPath(String iconPath) {
+            this.iconPath = iconPath;
+            return this;
+        }
 
         public User build() {
             return new User(this);
@@ -99,5 +106,13 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getIconPath() {
+        return iconPath;
+    }
+
+    public void setIconPath(String iconPath) {
+        this.iconPath = iconPath;
     }
 }

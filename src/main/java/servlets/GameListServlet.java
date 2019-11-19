@@ -20,15 +20,11 @@ public class GameListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getSession().getAttribute("userLogin") == null) {
-            resp.sendRedirect(req.getContextPath() + "/login");
-            return;
-        }
-        String userLogin = req.getSession().getAttribute("userLogin").toString();
-        List<Game> userGames = gameService.find(accountService.findUserId(userLogin), true);
 
-        req.setAttribute("games", userGames);
-        req.getRequestDispatcher("/games.jsp").forward(req, resp);
+        List<Game> games = gameService.findAll();
+
+        req.setAttribute("games", games);
+        req.getRequestDispatcher(req.getContextPath() + "/jsp/games.jsp").forward(req, resp);
     }
 
     @Override

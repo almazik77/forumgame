@@ -16,6 +16,10 @@ public class GameService {
         this.gamesRepository = gamesRepository;
     }
 
+    public List<Game> findAll() {
+        return gamesRepository.findAll();
+    }
+
     public List<Game> find(Long userId, boolean b) {
         return gamesRepository.find(userId, b);
     }
@@ -28,6 +32,14 @@ public class GameService {
     }
 
     public void save(Long moderatorId, String gameDescription, String gameName) {
-        gamesRepository.save(new Game(new ArrayList<>(), moderatorId, new ArrayList<>(), new ArrayList<>(), gameDescription));
+        gamesRepository.save(new Game(gameName, new ArrayList<>(), moderatorId, new ArrayList<>(), new ArrayList<>(), gameDescription));
+    }
+
+    public void update(String newPhrase, Long userId, Long gameId) {
+        Optional<Game> game = gamesRepository.find(gameId);
+        if (game.isPresent()) {
+            game.get().getGameText().add(new Phrase(game.get().getGameText().size(), newPhrase, false, userId));
+            gamesRepository.update(game.get());
+        }
     }
 }

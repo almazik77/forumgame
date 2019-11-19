@@ -1,0 +1,75 @@
+html, body {
+    height: 100%
+}
+
+div {
+    display: block;
+}
+h1{
+    font-family: Tahoma;
+    color: darkred;
+}
+
+A {
+    text-decoration-line: none;
+    text-decoration-style: initial;
+    text-decoration-color: initial;
+    color: saddlebrown;
+}
+
+span {
+    float: top;
+}
+
+.text {
+    background-color: #F9F9F9;
+    border-color: #CCCCCC;
+    border-width: 1px;
+    border-style: Dashed;
+    color: #444444;
+    width: 295px;
+    font-family: Tahoma;
+    font-size: 15px;
+}
+
+table {
+    border: 4px;
+    padding: 60px;
+    margin: auto;
+}
+
+td {
+    padding: 5px 3px;
+}
+
+.table_registration {
+    width: 600px;
+}
+
+.table_login {
+    width: 400px;
+}
+
+.main_part {
+    width: 95%;
+    height: 90%;
+    position: relative;
+    margin: auto;
+    top: 70px;
+}
+
+main {
+    min-height: 85%;
+}
+
+._button {
+    background-color: #EAEAEA;
+    border-color: #CCCCCC;
+    border-width: 1px;
+    border-style: Dashed;
+    color: #444444;
+    font-family: Tahoma;
+    font-weight: bold;
+    font-size: 20px;
+}
+

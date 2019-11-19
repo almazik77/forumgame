@@ -21,16 +21,16 @@ public class LoginServlet extends HttpServlet {
         Cookie[] cookies = req.getCookies();
         Cookie cookie = null;
         for (Cookie c : cookies) {
-            if (c.getName().equals("userLogin")) {
+            if (c.getName().equals("userId")) {
                 cookie = c;
                 break;
             }
         }
-        if (cookie != null || req.getAttribute("userLogin") != null) {
-            resp.sendRedirect(req.getContextPath() + "/profile");
+        if (cookie != null || req.getSession().getAttribute("userId") != null) {
+            resp.sendRedirect(req.getContextPath() + "/profile?userId=" + req.getParameter("userId"));
             return;
         }
-        req.getRequestDispatcher(req.getContextPath() + "/login.jsp").forward(req, resp);
+        req.getRequestDispatcher(req.getContextPath() + "/jsp/login.jsp").forward(req, resp);
     }
 
     @Override
@@ -42,11 +42,10 @@ public class LoginServlet extends HttpServlet {
         if (res.equals("Success")) {
             Long userId = accountService.find(login).getId();
             if (req.getParameterValues("remember_me") != null) {
-                resp.addCookie(new Cookie("userLogin", login));
                 resp.addCookie(new Cookie("userId", userId.toString()));
             }
             req.getSession().setAttribute("userId", userId);
-            req.getSession().setAttribute("userLogin", login);
+            req.getSession().setAttribute("userAvatar", req.getContextPath() + "/userAvatar/" + userId + ".jpg");
             resp.sendRedirect(req.getContextPath() + "/profile");
             return;
         } else {

@@ -19,18 +19,44 @@ public class GameServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getSession().getAttribute("gameId") == null) {
+        if (req.getParameter("id") == null && req.getSession().getAttribute("gameId") == null) {
             resp.sendRedirect(req.getContextPath() + "/games");
             return;
         }
-        Long gameId = (Long) req.getSession().getAttribute("gameId");
-        List<Phrase> phrases = gameService.find(gameId);
+        if (req.getSession().getAttribute("userId") == null) {
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
 
+        Long gameId = null;
+
+        if (req.getParameter("id") == null) {
+            gameId = (Long) req.getSession().getAttribute("gameId");
+        } else {
+            gameId = Long.valueOf(req.getParameter("id"));
+        }
+
+        if (gameId == null) {
+            resp.sendRedirect(req.getContextPath() + "/profile");
+            return;
+        }
+        List<Phrase> phrases = gameService.find(gameId);
+        req.getSession().setAttribute("gameId", gameId);
         req.setAttribute("phrases", phrases);
 
-        req.getRequestDispatcher("/game.jsp").forward(req, resp);
+        req.getRequestDispatcher(req.getContextPath() + "/jsp/game.jsp").forward(req, resp);
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String newPhrase = req.getParameter("newPhrase");
+        Long userId = (Long) req.getSession().getAttribute("userId");
+        Long gameId = (Long) (req.getSession().getAttribute("gameId"));
+        if (newPhrase != null) {
+            gameService.update(newPhrase, userId, gameId);
+        }
+        resp.sendRedirect(req.getContextPath() + "/game?gameId=" + gameId);
+    }
 
     @Override
     public void init() throws ServletException {

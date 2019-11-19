@@ -47,7 +47,7 @@ public class ServerContext {
 
     public static GamesRepository getGamesRepository() {
         if (gamesRepository == null) {
-            gamesRepository = new GamesRepositoryJDBC(connection, getUsersRepository(), new ObjectMapper());
+            gamesRepository = new GamesRepositoryJDBC(getConnection(), getUsersRepository(), new ObjectMapper());
         }
         return gamesRepository;
     }

@@ -1,5 +1,6 @@
 package repositories;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Game;
 import models.Phrase;
@@ -7,6 +8,7 @@ import models.Phrase;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,12 +20,12 @@ public class GamesRepositoryJDBC implements GamesRepository {
 
     //language=SQL
     private String SQL_INSERT_GAME = "INSERT INTO games " +
-            "(phrases, moderator_id, players, players_status, description) " +
+            "(phrases, moderator_id, player_id, player_status, description) " +
             "VALUES (?, ?, ?, ?, ?);";
 
     //language=SQL
     private String SQL_UPDATE_GAME = "UPDATE games set phrases = ?, moderator_id = ?," +
-            " players = ?, players_status = ?, description = ? where id = ?;";
+            " player_id = ?, player_status = ?, description = ? where id = ?;";
 
     //language=SQL
     private String SQL_UPDATE_PHRASES = "update games set phrases = ? where id = ?;";
@@ -48,15 +50,15 @@ public class GamesRepositoryJDBC implements GamesRepository {
 
     private RowMapper<Game> gameRowMapper = row -> {
         try {
+            String name = row.getString("name");
             Long id = row.getLong("id");
             ObjectMapper mapper = new ObjectMapper();
-            List<Phrase> gameText = mapper.readValue(row.getString("phrases"), List.class);
+            List<Phrase> gameText = new ArrayList<>(Arrays.asList(mapper.readValue(row.getString("phrases"), Phrase[].class)));
             Long moderatorId = row.getLong("moderator_id");
-
-            List<Long> playersId = mapper.readValue(row.getString("players_id"), List.class);
-            List<String> playersStatus = mapper.readValue(row.getString("players_status"), List.class);
+            List<Long> playersId = new ArrayList<>(Arrays.asList(mapper.readValue(row.getString("player_id"), Long[].class)));
+            List<String> playersStatus = new ArrayList<>(Arrays.asList(mapper.readValue(row.getString("player_status"), String[].class)));
             String description = row.getString("description");
-            return new Game(id, gameText, moderatorId, playersId, playersStatus, description);
+            return new Game(id, name, gameText, moderatorId, playersId, playersStatus, description);
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
@@ -77,16 +79,16 @@ public class GamesRepositoryJDBC implements GamesRepository {
             }
             statement.close();
             resultSet.close();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
     }
 
-    private static void setStatement(Game model, PreparedStatement statement) throws SQLException {
-        statement.setString(1, model.getGameText().toString());
+    private void setStatement(Game model, PreparedStatement statement) throws SQLException, JsonProcessingException {
+        statement.setString(1, objectMapper.writeValueAsString(model.getGameText()));
         statement.setLong(2, model.getModeratorId());
-        statement.setString(3, model.getPlayersId().toString());
-        statement.setString(4, model.getPlayerStatus().toString());
+        statement.setString(3, objectMapper.writeValueAsString(model.getPlayersId()));
+        statement.setString(4, objectMapper.writeValueAsString(model.getPlayerStatus()));
         statement.setString(5, model.getDescription());
     }
 
@@ -102,7 +104,7 @@ public class GamesRepositoryJDBC implements GamesRepository {
             statement.execute();
 
             statement.close();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
     }

@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Game {
     private Long id;
+    private String name;
     private List<Phrase> gameText;
     private Long moderatorId;
     private List<Long> playersId;
@@ -13,8 +14,9 @@ public class Game {
     public Game() {
     }
 
-    public Game(Long id, List<Phrase> gameText, Long moderatorId, List<Long> playersId, List<String> playerStatus, String description) {
+    public Game(Long id, String name, List<Phrase> gameText, Long moderatorId, List<Long> playersId, List<String> playerStatus, String description) {
         this.id = id;
+        this.name = name;
         this.gameText = gameText;
         this.moderatorId = moderatorId;
         this.playersId = playersId;
@@ -22,12 +24,21 @@ public class Game {
         this.description = description;
     }
 
-    public Game(List<Phrase> gameText, Long moderatorId, List<Long> playersId, List<String> playerStatus, String description) {
+    public Game(String name, List<Phrase> gameText, Long moderatorId, List<Long> playersId, List<String> playerStatus, String description) {
+        this.name = name;
         this.gameText = gameText;
         this.moderatorId = moderatorId;
         this.playersId = playersId;
         this.playerStatus = playerStatus;
         this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getId() {

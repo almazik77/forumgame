@@ -14,10 +14,10 @@ public class UsersRepositoryJDBC implements UsersRepository {
     //language=SQL
     private String SQL_FIND_ACCOUNT_BY_LOGIN = "SELECT * FROM account WHERE login = ?";
     //language=SQL
-    private String SQL_INSERT_ACCOUNT = "INSERT INTO account (login, password, email) " +
-            "VALUES (?,?,?)";
+    private String SQL_INSERT_ACCOUNT = "INSERT INTO account (login, password, email, icon_path) " +
+            "VALUES (?,?,?, ?)";
     //language=SQL
-    private String SQL_UPDATE_ACCOUNT = "UPDATE account set login = ?, password = ?, email = ? where id = ?";
+    private String SQL_UPDATE_ACCOUNT = "UPDATE account set login = ?, password = ?, email = ?, icon_path = ? where id = ?";
     //language=SQL
     private String SQL_DELETE_ACCOUNT = "DELETE FROM account WHERE id = ?";
     //language=SQL
@@ -31,7 +31,8 @@ public class UsersRepositoryJDBC implements UsersRepository {
         String password = row.getString("password");
         String mail = row.getString("email");
         String role = row.getString("role");
-        return User.builder().id(id).email(mail).password(password).login(login).role(role).build();
+        String iconPath = row.getString("icon_path");
+        return User.builder().id(id).email(mail).password(password).login(login).role(role).iconPath(iconPath).build();
     };
 
     public UsersRepositoryJDBC(Connection connection) {
@@ -48,7 +49,10 @@ public class UsersRepositoryJDBC implements UsersRepository {
             //добавим данные в выражение
             statement.setString(1, model.getLogin());
             statement.setString(2, model.getPassword());
-            statement.setString(3, model.getMail().get());
+            if (model.getMail().isPresent())
+                statement.setString(3, model.getMail().get());
+
+            statement.setString(4, model.getIconPath());
 
             // обратимся к БД нашим выражением и получим сколько строк было затронуто
             int affectedRows = statement.executeUpdate();
@@ -80,8 +84,13 @@ public class UsersRepositoryJDBC implements UsersRepository {
             //добавим данные в выражение
             statement.setString(1, model.getLogin());
             statement.setString(2, model.getPassword());
-            statement.setString(3, model.getMail().get());
-            statement.setLong(4, model.getId());
+            if (model.getMail().isPresent())
+                statement.setString(3, model.getMail().get());
+            else {
+                statement.setString(3, null);
+            }
+            statement.setString(4, model.getIconPath());
+            statement.setLong(5, model.getId());
             // отравим выражение в СУБД и
             statement.executeUpdate();
             statement.close();
