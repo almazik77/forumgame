@@ -2,12 +2,10 @@ package server;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import repositories.GamesRepository;
-import repositories.GamesRepositoryJDBC;
-import repositories.UsersRepository;
-import repositories.UsersRepositoryJDBC;
+import repositories.*;
 import services.AccountService;
 import services.GameService;
+import services.MessageService;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,9 +18,25 @@ public class ServerContext {
 
     static Connection connection;
     static UsersRepository usersRepository;
+    static MessageRepository messageRepository;
     static GamesRepository gamesRepository;
     static AccountService accountService;
     static GameService gameService;
+    static MessageService messageService;
+
+    public static MessageService getMessageService() {
+        if (messageService == null) {
+            messageService = new MessageService(getMessageRepository());
+        }
+        return messageService;
+    }
+
+    public static MessageRepository getMessageRepository() {
+        if (messageRepository == null) {
+            messageRepository = new MessageRepositoryJdbcImpl(getConnection());
+        }
+        return messageRepository;
+    }
 
     public static GameService getGameService() {
         if (gameService == null) {
