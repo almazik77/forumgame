@@ -34,14 +34,15 @@
     <div class="jumbotron-fluid row" style="padding: 5%">
 
         <div class="col-2 ">
-            <a href="/"><span>Профиль</span></a>
+            <a href="<%=request.getContextPath() + "/profile"%>"><span>Профиль</span></a>
             <hr>
-            <a href="/"><span>Мои игры</span></a>
+            <a href="<%=request.getContextPath() + "/myGames"%>"><span>Мои игры</span></a>
             <hr>
-            <a href="/"><span>Сообщения</span></a>
+            <a href="<%=request.getContextPath() + "/messages"%>"><span>Сообщения</span></a>
             <hr>
-            <a href="/"><span>Настройки</span></a>
+            <a href="<%=request.getContextPath() + "/settings"%>"><span>Настройки</span></a>
             <hr>
+            <a href="<%=request.getContextPath() + "/logout"%>"><span>Выйти</span></a>
         </div>
         <div class="col-10">
 

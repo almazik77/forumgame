@@ -5,7 +5,6 @@ import models.Phrase;
 import repositories.GamesRepository;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,15 +23,16 @@ public class GameService {
         return gamesRepository.find(userId, b);
     }
 
-    public List<Phrase> find(Long gameId) {
-        Optional<Game> game = gamesRepository.find(gameId);
-        if (game.isPresent())
-            return game.get().getGameText();
-        else return Collections.EMPTY_LIST;
+    public Optional<Game> find(Long gameId) {
+        return gamesRepository.find(gameId);
     }
 
     public void save(Long moderatorId, String gameDescription, String gameName) {
-        gamesRepository.save(new Game(gameName, new ArrayList<>(), moderatorId, new ArrayList<>(), new ArrayList<>(), gameDescription));
+        List<Long> players = new ArrayList<>();
+        players.add(moderatorId);
+        List<String> statuses = new ArrayList<>();
+        statuses.add("Alive");
+        gamesRepository.save(new Game(gameName, new ArrayList<Phrase>(), moderatorId, players, statuses, gameDescription));
     }
 
     public void update(String newPhrase, Long userId, Long gameId) {

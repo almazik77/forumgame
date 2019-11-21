@@ -1,5 +1,6 @@
 package servlets;
 
+import models.Game;
 import models.Phrase;
 import server.ServerContext;
 import services.GameService;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @WebServlet("/game")
 public class GameServlet extends HttpServlet {
@@ -40,11 +42,21 @@ public class GameServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/profile");
             return;
         }
-        List<Phrase> phrases = gameService.find(gameId);
-        req.getSession().setAttribute("gameId", gameId);
-        req.setAttribute("phrases", phrases);
+        Optional<Game> game = gameService.find(gameId);
+        if (game.isPresent()) {
+            List<Phrase> phrases = game.get().getGameText();
+            List<Long> players = game.get().getPlayersId();
+            List<String> statuses = game.get().getPlayerStatus();
 
-        req.getRequestDispatcher(req.getContextPath() + "/jsp/game.jsp").forward(req, resp);
+            req.getSession().setAttribute("gameId", gameId);
+            req.setAttribute("players", players);
+            req.setAttribute("statuses", statuses);
+            req.setAttribute("phrases", phrases);
+
+            req.getRequestDispatcher(req.getContextPath() + "/jsp/game.jsp").forward(req, resp);
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/games");
+        }
     }
 
     @Override

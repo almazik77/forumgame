@@ -29,7 +29,7 @@
 </head>
 <body>
 <div id="header"></div>
-<table>
+<main>
     <form action='<%=request.getContextPath() + "/signUp"%>' method="post">
         <table cellpadding="0" cellspacing="0" class="table_registration">
             <tr>
@@ -61,9 +61,9 @@
                    color:#444444;font-family:Tahoma;font-weight:bold;font-size:15px; text-align: center">
                 </td>
             </tr>
+        </table>
     </form>
-</table>
-
+</main>
 
 <div id="footer"></div>
 
