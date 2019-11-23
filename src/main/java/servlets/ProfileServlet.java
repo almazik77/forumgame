@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @WebServlet(name = "uploadServlet", urlPatterns = {"/profile"}, loadOnStartup = 1)
@@ -32,6 +33,17 @@ public class ProfileServlet extends HttpServlet {
         if (userId == null && req.getSession().getAttribute("userId") != null) {
             userId = (Long) req.getSession().getAttribute("userId");
         }
+        if (req.getParameter("makeModerator") != null) {
+            if (req.getSession().getAttribute("userId") != null) {
+                Long ac = (Long) req.getSession().getAttribute("userId");
+                Optional<User> userOptional = accountService.find(ac);
+                if (userOptional.isPresent() && userOptional.get().getRole().equals("admin")) {
+                    accountService.makeAdmin(Long.valueOf(req.getParameter("makeModerator")));
+                }
+            }
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
         if (userId == null) {
             resp.sendRedirect(req.getContextPath() + "/games");
             return;
@@ -41,6 +53,10 @@ public class ProfileServlet extends HttpServlet {
             req.setAttribute("userLogin", user.get().getLogin());
             req.setAttribute("userId", user.get().getId());
             req.setAttribute("userAvatar", req.getContextPath() + "/userAvatar/" + user.get().getId() + ".jpg");
+            if (req.getSession().getAttribute("userId") != null) {
+                List<Long> games = accountService.findGamesWhereMod((Long) req.getSession().getAttribute("userId"));
+                req.setAttribute("gamesWhereMod", games);
+            }
         } else {
             resp.sendRedirect(req.getContextPath() + "/games");
             return;

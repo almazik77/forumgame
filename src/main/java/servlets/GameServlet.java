@@ -3,6 +3,7 @@ package servlets;
 import models.Game;
 import models.Phrase;
 import server.ServerContext;
+import services.AccountService;
 import services.GameService;
 
 import javax.servlet.ServletException;
@@ -17,7 +18,6 @@ import java.util.Optional;
 @WebServlet("/game")
 public class GameServlet extends HttpServlet {
     private GameService gameService;
-
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -49,6 +49,8 @@ public class GameServlet extends HttpServlet {
             List<String> statuses = game.get().getPlayerStatus();
 
             req.getSession().setAttribute("gameId", gameId);
+            if (game.get().getModeratorId().equals(req.getSession().getAttribute("userId")))
+                req.setAttribute("is_moderator", Boolean.TRUE);
             req.setAttribute("players", players);
             req.setAttribute("statuses", statuses);
             req.setAttribute("phrases", phrases);

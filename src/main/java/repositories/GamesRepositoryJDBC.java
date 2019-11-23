@@ -71,14 +71,9 @@ public class GamesRepositoryJDBC implements GamesRepository {
                     Statement.RETURN_GENERATED_KEYS);
             setStatement(model, statement);
 
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                model.setId(resultSet.getLong("id"));
-            } else {
-                throw new SQLException();
-            }
+            statement.execute();
             statement.close();
-            resultSet.close();
+
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
@@ -142,6 +137,7 @@ public class GamesRepositoryJDBC implements GamesRepository {
         List<Game> result = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL);
+            statement.execute();
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 result.add(gameRowMapper.mapRow(resultSet));
@@ -163,5 +159,20 @@ public class GamesRepositoryJDBC implements GamesRepository {
         }
         return result;
 
+    }
+
+    @Override
+    public List<Long> findWhereMod(Long id) {
+        List<Long> result = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM games WHERE moderator_id = " + id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                result.add(gameRowMapper.mapRow(resultSet).getId());
+            }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e);
+        }
+        return result;
     }
 }

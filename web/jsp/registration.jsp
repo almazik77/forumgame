@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <title>Registration</title>
     <script type='text/html' src='<%=request.getContextPath()+"/"%>footer_and_header_helper.jsp'></script>
     <meta charset="UTF-8">

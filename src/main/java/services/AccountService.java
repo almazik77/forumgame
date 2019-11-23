@@ -2,18 +2,21 @@ package services;
 
 import models.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import repositories.GamesRepository;
 import repositories.UsersRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public class AccountService {
 
     private UsersRepository usersRepository;
-    PasswordEncoder encoder;
+    private GamesRepository gamesRepository;
+    private PasswordEncoder encoder;
 
-
-    public AccountService(UsersRepository usersRepository, PasswordEncoder encoder) {
+    public AccountService(UsersRepository usersRepository, GamesRepository gamesRepository, PasswordEncoder encoder) {
         this.usersRepository = usersRepository;
+        this.gamesRepository = gamesRepository;
         this.encoder = encoder;
     }
 
@@ -23,6 +26,9 @@ public class AccountService {
         return true;
     }
 
+    public void makeAdmin(Long id) {
+        usersRepository.makeAdmin(id);
+    }
 
     public User find(String login) {
         return usersRepository.find(login).get();
@@ -51,5 +57,9 @@ public class AccountService {
         Optional<User> user = find(id);
 
         return user.isPresent() && (user.get().getRole().equals("admin") || user.get().getRole().equals("moderator"));
+    }
+
+    public List<Long> findGamesWhereMod(Long id) {
+        return gamesRepository.findWhereMod(id);
     }
 }

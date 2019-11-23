@@ -10,6 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <meta charset="UTF-8">
     <script type='text/html' src='<%=request.getContextPath()%>/jsp/footer_and_header_helper.jsp'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -41,10 +42,10 @@
                      src="<%=request.getContextPath() + "/userAvatar/" + phrase.getUserId() + ".jpg"%>"
                      alt="">
                 <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                    <c:out value="<%=phrase.getUserLogin()%>"/>
                     <p class="font-weight-bold my-0">
-                        <%=phrase.getUserId()%>
+                        <c:out value="<%=phrase.getText()%>"/>
                     </p>
-                    <%=phrase.getText()%>
                 </div>
             </div>
             <% }%>

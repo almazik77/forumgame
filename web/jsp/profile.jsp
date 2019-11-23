@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: almaz
   Date: 18.11.2019
@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <title>Profile</title>
     <meta charset="UTF-8">
     <script type='text/html' src='<%=request.getContextPath()%>/jsp/footer_and_header_helper.jsp'></script>
@@ -37,7 +38,7 @@
             <hr>
             <a href="<%=request.getContextPath() + "/myGames"%>"><span>Мои игры</span></a>
             <hr>
-            <a href="<%=request.getContextPath() + "/messages"%>"><span>Сообщения</span></a>
+            <a href="<%=request.getContextPath() + "/im"%>"><span>Сообщения</span></a>
             <hr>
             <a href="<%=request.getContextPath() + "/settings"%>"><span>Настройки</span></a>
             <hr>
@@ -61,13 +62,39 @@
                     <% } %>
                 </div>
                 <div class="col-md-5 order-md-2" style="width: 80%;">
-                    <p style="color: saddlebrown">Логин: <%=request.getAttribute("userLogin")%>
+                    <p style="color: saddlebrown">
+                        Логин: <c:out value="${userLogin}"/>
                     </p>
-                    <%if (request.getAttribute("userId").equals(request.getSession().getAttribute("userId"))) { %>
+                    <%if (request.getSession().getAttribute("userId") != null && request.getAttribute("userId") != null && request.getAttribute("userId").equals(request.getSession().getAttribute("userId"))) { %>
                     <button class="_button" onclick="location.href='<%=request.getContextPath() + "/newGame"%>'">Создать
                         новую игру
                     </button>
-                    <% } %>
+                    <% } else { %>
+                    <button class="_button"
+                            onclick="location.href='<%=request.getContextPath() + "/messages?userId=" + request.getAttribute("userId")%>'">
+                        Перейти к диалогу
+                    </button>
+                    <% if (request.getSession().getAttribute("isModerator") != null && request.getSession().getAttribute("isModerator").equals(Boolean.TRUE)) { %>
+                    <button class="_button"
+                            onclick="location.href='<%=request.getContextPath() + "/profile?makeModerator=" + request.getAttribute("userId")%>'">
+                        Сделать модератором сайта
+                    </button>
+                    <form action="${pageContext.request.contextPath}/games" method="post">
+                        <select name="gameId">
+                            <% for (Long id : (List<Long>) request.getAttribute("gamesWhereMod")) { %>
+                            <option label="id" value="<%=id%>">
+                                <%=id%>
+                            </option>
+                            <% } %>
+                        </select>
+                        <% if (((List<Long>) request.getAttribute("gamesWhereMod")).size() > 0) { %>
+                        <input style="display: none" name="userId" value="<%=request.getAttribute("userId")%>">
+                        <input class="_button" type="submit" value="Пригласить в игру">
+                        <% } %>
+                    </form>
+                    <% }
+                    }%>
+
                 </div>
             </div>
         </div>

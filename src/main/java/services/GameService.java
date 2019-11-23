@@ -10,9 +10,11 @@ import java.util.Optional;
 
 public class GameService {
     private GamesRepository gamesRepository;
+    private AccountService accountService;
 
-    public GameService(GamesRepository gamesRepository) {
+    public GameService(GamesRepository gamesRepository, AccountService accountService) {
         this.gamesRepository = gamesRepository;
+        this.accountService = accountService;
     }
 
     public List<Game> findAll() {
@@ -36,9 +38,22 @@ public class GameService {
     }
 
     public void update(String newPhrase, Long userId, Long gameId) {
+        String userLogin = accountService.find(userId).get().getLogin();
         Optional<Game> game = gamesRepository.find(gameId);
         if (game.isPresent()) {
-            game.get().getGameText().add(new Phrase(game.get().getGameText().size(), newPhrase, false, userId));
+            game.get().getGameText().add(new Phrase(game.get().getGameText().size(), newPhrase, false, userId, userLogin));
+            gamesRepository.update(game.get());
+        }
+    }
+
+    public void addUserToGame(Long userId, Long gameId) {
+        Optional<Game> game = gamesRepository.find(gameId);
+        if (game.isPresent()) {
+            List<Long> pl = game.get().getPlayersId();
+            if (!pl.contains(userId)) {
+                pl.add(userId);
+                game.get().getPlayerStatus().add("Alive");
+            }
             gamesRepository.update(game.get());
         }
     }

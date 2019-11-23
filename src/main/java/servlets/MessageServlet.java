@@ -23,7 +23,7 @@ public class MessageServlet extends HttpServlet {
             return;
         }
         if (req.getParameter("userId") == null) {
-            resp.sendRedirect(req.getContextPath() + "/games");
+            resp.sendRedirect(req.getContextPath() + "/im");
             return;
         }
         Long first = Long.valueOf(req.getParameter("userId"));

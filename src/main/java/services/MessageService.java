@@ -19,4 +19,8 @@ public class MessageService {
     public List<Message> messagesBetweenTwoPerson(Long first, Long second) {
         return messageRepository.messagesBetweenTwoPerson(first, second);
     }
+
+    public List<Long> senderIDsTo(Long id) {
+        return messageRepository.senderIDsTo(id);
+    }
 }

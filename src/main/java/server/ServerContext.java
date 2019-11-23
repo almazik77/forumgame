@@ -9,6 +9,7 @@ import services.MessageService;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -40,14 +41,14 @@ public class ServerContext {
 
     public static GameService getGameService() {
         if (gameService == null) {
-            gameService = new GameService(getGamesRepository());
+            gameService = new GameService(getGamesRepository(), getAccountService());
         }
         return gameService;
     }
 
     public static AccountService getAccountService() {
         if (accountService == null) {
-            accountService = new AccountService(getUsersRepository(), new BCryptPasswordEncoder());
+            accountService = new AccountService(getUsersRepository(), getGamesRepository(), new BCryptPasswordEncoder());
         }
         return accountService;
     }
@@ -71,7 +72,8 @@ public class ServerContext {
         if (connection == null) {
             try {
                 Properties properties = new Properties();
-                properties.load(new FileReader("/media/almaz/Data/projects/forumgame/db.properties"));
+                properties.load(new FileReader("D:\\projects\\forumgame\\db.properties"));
+
                 String url = properties.getProperty("db.url");
                 String userName = properties.getProperty("db.user_name");
                 String password = properties.getProperty("db.password");

@@ -37,6 +37,7 @@ public class NewGameServlet extends HttpServlet {
 
         if (!accountService.checkIfCanCreateGame(userId)) {
             resp.sendRedirect(req.getContextPath() + "/games");
+            return;
         }
 
         req.getRequestDispatcher(req.getContextPath() + "/jsp/new_game.jsp").forward(req, resp);

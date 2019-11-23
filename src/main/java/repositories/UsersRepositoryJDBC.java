@@ -170,4 +170,20 @@ public class UsersRepositoryJDBC implements UsersRepository {
         }
         return Optional.ofNullable(user);
     }
+
+    @Override
+    public void makeAdmin(Long id) {
+        try {
+            // подготовим выражение для обращения к БД
+            PreparedStatement statement = connection.prepareStatement("UPDATE account set role = 'admin' where id = ?",
+                    Statement.RETURN_GENERATED_KEYS);
+            //добавим данные в выражение
+            statement.setLong(1, id);
+            // отравим выражение в СУБД и
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
 }

@@ -17,9 +17,19 @@ public class MessageRepositoryJdbcImpl implements MessageRepository {
     private final String SQL_FIND_MESSAGES_BETWEEN_TWO_PEOPLE = "SELECT * FROM message " +
             "where (fromuserid = ? and  touserid = ?) or (touserid = ? and fromuserid = ?)";
 
+    //language=SQL
+    private final String SQL_FIND_SENDER_IDs_BY_RECIEVER_ID = "SELECT DISTINCT fromuserid FROM message " +
+            " WHERE touserid = ?";
+
     public MessageRepositoryJdbcImpl(Connection connection) {
         this.connection = connection;
     }
+
+
+    private RowMapper<Long> idRowMapper = row -> {
+        Long id = row.getLong("fromuserid");
+        return id;
+    };
 
     private RowMapper<Message> messageRowMapper = row -> {
         try {
@@ -82,6 +92,24 @@ public class MessageRepositoryJdbcImpl implements MessageRepository {
             while (resultSet.next()) {
                 Message message = messageRowMapper.mapRow(resultSet);
                 result.add(message);
+            }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Long> senderIDsTo(Long id) {
+        List<Long> result = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(SQL_FIND_SENDER_IDs_BY_RECIEVER_ID, Statement.RETURN_GENERATED_KEYS);
+            statement.setLong(1, id);
+
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                result.add(idRowMapper.mapRow(resultSet));
             }
         } catch (SQLException e) {
             throw new IllegalArgumentException(e);

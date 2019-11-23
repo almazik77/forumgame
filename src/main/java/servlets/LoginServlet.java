@@ -1,5 +1,6 @@
 package servlets;
 
+import models.User;
 import server.ServerContext;
 import services.AccountService;
 
@@ -40,12 +41,14 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
         String res = accountService.find(login, password);
         if (res.equals("Success")) {
-            Long userId = accountService.find(login).getId();
+            User user = accountService.find(login);
+            Long userId = user.getId();
             if (req.getParameterValues("remember_me") != null) {
                 resp.addCookie(new Cookie("userId", userId.toString()));
             }
             req.getSession().setAttribute("userId", userId);
             req.getSession().setAttribute("userAvatar", req.getContextPath() + "/userAvatar/" + userId + ".jpg");
+            req.getSession().setAttribute("isModerator", user.getRole().equals("admin"));
             resp.sendRedirect(req.getContextPath() + "/profile");
             return;
         } else {

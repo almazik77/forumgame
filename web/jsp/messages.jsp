@@ -9,6 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <title>Messages</title>
     <meta charset="UTF-8">
     <script type='text/html' src='<%=request.getContextPath()%>/jsp/footer_and_header_helper.jsp'></script>
@@ -38,7 +39,7 @@
             <hr>
             <a href="<%=request.getContextPath() + "/myGames"%>"><span>Мои игры</span></a>
             <hr>
-            <a href="<%=request.getContextPath() + "/messages"%>"><span>Сообщения</span></a>
+            <a href="<%=request.getContextPath() + "/im"%>"><span>Сообщения</span></a>
             <hr>
             <a href="<%=request.getContextPath() + "/settings"%>"><span>Настройки</span></a>
             <hr>
@@ -57,7 +58,7 @@
                              alt="">
                         <div class="media-body text-center text-md-left ml-md-3 ml-0">
                             <p class="font-weight-bold my-0">
-                                <%=message.getMessage()%>
+                                <c:out value="<%=message.getMessage()%>"/>
                             </p>
                         </div>
                     </div>

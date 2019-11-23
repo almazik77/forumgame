@@ -1,9 +1,10 @@
-<%@ page import="models.Game" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="models.User" %>
+<%@ page import="java.util.List" %>
+<%--
   Created by IntelliJ IDEA.
   User: almaz
-  Date: 18.11.2019
-  Time: 23:40
+  Date: 22.11.2019
+  Time: 2:44
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -27,35 +28,31 @@
     <link href="../css/mdb.min.css" rel="stylesheet">
     <!-- Your custom styles (optional) -->
     <link href="../css/style.css" rel="stylesheet">
+    <title>My messages</title>
 </head>
 <body>
 <div id="header"></div>
 <main>
 
-    <%for (Game game : (List<Game>) request.getAttribute("games")) { %>
-    <div class="jumbotron text-center hoverable p-4"
-         onclick="location.href='<%=request.getContextPath() + "/game?id=" +game.getId()%>'"
-         style="border: groove 5px ; background-color: #F2F1F0; margin: 3% 5%; color: darkred">
+    <% for (User user : (List<User>) request.getAttribute("from")) {%>
 
-        <div class="row" style="margin: 2% 1%">
-
-            <div class=" text-md-left ml-3 mt-3">
-
-                <h4 class="h4 mb-4">
-                    <c:out value="<%=game.getName()%>"/>
-                </h4>
-
-                <p class="font-weight-normal"><c:out value="<%=game.getDescription()%>"/>
-                </p>
-                <p class="font-weight-normal">by <a
-                        href="<%=request.getContextPath() + "profile?userId=" + game.getModeratorId()%>"><strong><%=game.getModeratorId()%>
-                </strong></a>,
+    <section class="text-center text-lg-left dark-grey-text" style="border: groove"
+             onclick="location.href='<%=request.getContextPath() + "/messages?userId=" + user.getId()%>'"
+    >
+        <div class="media d-block d-md-flex mt-4">
+            <img class="card-img-64 rounded z-depth-1 d-flex mx-auto mb-3"
+                 src="<%=request.getContextPath() + "/userAvatar/" +  user.getId() + ".jpg"%>"
+                 alt="">
+            <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                <p class="font-weight-bold my-0">
+                    <c:out value="<%=user.getLogin()%>"/>
                 </p>
             </div>
         </div>
-    </div>
+    </section>
     <% } %>
 </main>
+
 <div id="footer"></div>
 </body>
 </html>

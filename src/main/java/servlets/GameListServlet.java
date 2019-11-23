@@ -27,6 +27,15 @@ public class GameListServlet extends HttpServlet {
         req.getRequestDispatcher(req.getContextPath() + "/jsp/games.jsp").forward(req, resp);
     }
 
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Long gameId = Long.valueOf(req.getParameter("gameId"));
+        Long userId = Long.valueOf(req.getParameter("userId"));
+        gameService.addUserToGame(userId, gameId);
+        resp.sendRedirect(req.getContextPath() + "/games");
+    }
+
     @Override
     public void init() throws ServletException {
         gameService = ServerContext.getGameService();

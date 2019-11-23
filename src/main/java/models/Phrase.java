@@ -5,16 +5,28 @@ public class Phrase {
     private String text;
     private boolean isChecked;
     private Long userId;
+    private String userLogin;
 
     public Phrase() {
 
     }
 
-    public Phrase(long id, String text, boolean isChecked, Long userId) {
+
+    public Phrase(long id, String text, boolean isChecked, Long userId, String userLogin) {
         this.id = id;
         this.text = text;
         this.isChecked = isChecked;
         this.userId = userId;
+        this.userLogin = userLogin;
+    }
+
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
     }
 
     public long getId() {
