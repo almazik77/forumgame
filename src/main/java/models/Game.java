@@ -10,6 +10,7 @@ public class Game {
     private List<Long> playersId;
     private List<String> playerStatus;
     private String description;
+    private String moderatorLogin;
 
     public Game() {
     }
@@ -87,5 +88,13 @@ public class Game {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getModeratorLogin() {
+        return moderatorLogin;
+    }
+
+    public void setModeratorLogin(String moderatorLogin) {
+        this.moderatorLogin = moderatorLogin;
     }
 }

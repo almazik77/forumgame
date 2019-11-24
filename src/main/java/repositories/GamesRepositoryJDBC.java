@@ -20,11 +20,11 @@ public class GamesRepositoryJDBC implements GamesRepository {
 
     //language=SQL
     private String SQL_INSERT_GAME = "INSERT INTO games " +
-            "(phrases, moderator_id, player_id, player_status, description) " +
-            "VALUES (?, ?, ?, ?, ?);";
+            "(name, phrases, moderator_id, player_id, player_status, description) " +
+            "VALUES (?, ?, ?, ?, ?, ?);";
 
     //language=SQL
-    private String SQL_UPDATE_GAME = "UPDATE games set phrases = ?, moderator_id = ?," +
+    private String SQL_UPDATE_GAME = "UPDATE games set name = ?, phrases = ?, moderator_id = ?," +
             " player_id = ?, player_status = ?, description = ? where id = ?;";
 
     //language=SQL
@@ -80,11 +80,12 @@ public class GamesRepositoryJDBC implements GamesRepository {
     }
 
     private void setStatement(Game model, PreparedStatement statement) throws SQLException, JsonProcessingException {
-        statement.setString(1, objectMapper.writeValueAsString(model.getGameText()));
-        statement.setLong(2, model.getModeratorId());
-        statement.setString(3, objectMapper.writeValueAsString(model.getPlayersId()));
-        statement.setString(4, objectMapper.writeValueAsString(model.getPlayerStatus()));
-        statement.setString(5, model.getDescription());
+        statement.setString(1, model.getName());
+        statement.setString(2, objectMapper.writeValueAsString(model.getGameText()));
+        statement.setLong(3, model.getModeratorId());
+        statement.setString(4, objectMapper.writeValueAsString(model.getPlayersId()));
+        statement.setString(5, objectMapper.writeValueAsString(model.getPlayerStatus()));
+        statement.setString(6, model.getDescription());
     }
 
     @Override
@@ -94,7 +95,7 @@ public class GamesRepositoryJDBC implements GamesRepository {
 
             setStatement(model, statement);
 
-            statement.setLong(6, model.getId());
+            statement.setLong(7, model.getId());
 
             statement.execute();
 

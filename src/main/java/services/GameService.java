@@ -18,14 +18,28 @@ public class GameService {
     }
 
     public List<Game> findAll() {
-        return gamesRepository.findAll();
+        List<Game> games =
+                gamesRepository.findAll();
+        for (Game game : games) {
+            game.setModeratorLogin(accountService.find(game.getModeratorId()).get().getLogin());
+        }
+        return games;
     }
 
     public List<Game> find(Long userId, boolean b) {
-        return gamesRepository.find(userId, b);
+        List<Game> games =
+                gamesRepository.find(userId, b);
+        for (Game game : games) {
+            game.setModeratorLogin(accountService.find(game.getModeratorId()).get().getLogin());
+        }
+        return games;
     }
 
     public Optional<Game> find(Long gameId) {
+        Optional<Game> game = gamesRepository.find(gameId);
+        if (game.isPresent()) {
+            game.get().setModeratorLogin(accountService.find(game.get().getModeratorId()).get().getLogin());
+        }
         return gamesRepository.find(gameId);
     }
 

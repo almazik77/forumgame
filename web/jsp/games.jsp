@@ -47,9 +47,12 @@
 
                 <p class="font-weight-normal"><c:out value="<%=game.getDescription()%>"/>
                 </p>
-                <p class="font-weight-normal">by <a
-                        href="<%=request.getContextPath() + "profile?userId=" + game.getModeratorId()%>"><strong><%=game.getModeratorId()%>
-                </strong></a>,
+                <p class="font-weight-normal">by
+                    <a href="<%=request.getContextPath() + "profile?userId=" + game.getModeratorId()%>">
+                        <strong>
+                            <c:out value="<%=game.getModeratorLogin()%>"/>
+                        </strong>
+                    </a>
                 </p>
             </div>
         </div>

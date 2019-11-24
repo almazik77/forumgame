@@ -50,8 +50,8 @@ public class NewGameServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
 
         Long moderatorId = (Long) req.getSession().getAttribute("userId");
-        String gameName = (String) req.getAttribute("game_name");
-        String gameDescription = (String) req.getAttribute("game_description");
+        String gameName = req.getParameter("game_name");
+        String gameDescription = req.getParameter("game_description");
 
         gameService.save(moderatorId, gameDescription, gameName);
         resp.sendRedirect(req.getContextPath() + "/games");
