@@ -24,6 +24,12 @@ public class ServerContext {
     static AccountService accountService;
     static GameService gameService;
     static MessageService messageService;
+    static Integer pageLimit = 5;
+
+
+    public static Integer getPageLimit() {
+        return pageLimit;
+    }
 
     public static MessageService getMessageService() {
         if (messageService == null) {

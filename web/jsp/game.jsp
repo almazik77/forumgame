@@ -62,7 +62,7 @@
                     </div>
                 </form>
             </div>
-            <% } else if (request.getAttribute("canCheck") != null && request.getAttribute("canCheck").equals(Boolean.TRUE)) { %>
+            <% } else if ((request.getAttribute("canCheck") != null && request.getAttribute("canCheck").equals(Boolean.TRUE)) ) { %>
             <div class="form-group mt-4">
                 <form action='<%=request.getContextPath()+"/game"%>' method="post">
                     <div class="text-center my-4">
@@ -76,15 +76,13 @@
     </div>
     <nav aria-label="Page navigation example">
         <ul class="pagination pg-blue justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="">1</a></li>
-            <li class="page-item"><a class="page-link" href="">2</a></li>
-            <li class="page-item"><a class="page-link" href="">3</a></li>
+            <%for (int i = 1; i <= (Integer) request.getAttribute("pagesCount"); i++) { %>
             <li class="page-item">
-                <a class="page-link">Next</a>
+                <a class="page-link" href="<%=request.getContextPath() + "/game?page=" + i%>">
+                    <%=i%>
+                </a>
             </li>
+            <% } %>
         </ul>
     </nav>
 </main>

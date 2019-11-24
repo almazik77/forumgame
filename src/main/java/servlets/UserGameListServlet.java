@@ -17,6 +17,7 @@ import java.util.List;
 public class UserGameListServlet extends HttpServlet {
     private GameService gameService;
     private AccountService accountService;
+    private Integer pageLimit;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -28,9 +29,24 @@ public class UserGameListServlet extends HttpServlet {
         }
         Long userId = Long.valueOf(req.getSession().getAttribute("userId").toString());
 
-        List<Game> userGames = gameService.find(userId, true);
 
+        Integer page = null;
+        if (req.getParameter("page") != null)
+            page = Integer.valueOf(req.getParameter("page"));
+        if (page == null || page <= 0) {
+            page = 1;
+        }
+
+
+        List<Game> userGames = gameService.find(userId, true);
+        Integer gamesCount = userGames.size();
+
+        userGames = userGames.subList(Math.max(0, Math.min((page - 1) * pageLimit, userGames.size() - 1)),
+                Math.min(page * pageLimit, userGames.size()));
+
+        req.setAttribute("my", Boolean.TRUE);
         req.setAttribute("games", userGames);
+        req.setAttribute("pagesCount", (gamesCount + pageLimit - 1) / pageLimit);
         req.getRequestDispatcher(req.getContextPath() + "/jsp/games.jsp").forward(req, resp);
     }
 
@@ -38,5 +54,6 @@ public class UserGameListServlet extends HttpServlet {
     public void init() throws ServletException {
         gameService = ServerContext.getGameService();
         accountService = ServerContext.getAccountService();
+        pageLimit = ServerContext.getPageLimit();
     }
 }

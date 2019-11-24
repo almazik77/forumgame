@@ -58,6 +58,19 @@
         </div>
     </div>
     <% } %>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination pg-blue justify-content-center">
+            <%for (int i = 1; i <= (Integer) request.getAttribute("pagesCount"); i++) { %>
+            <li class="page-item">
+                <a class="page-link"
+                   href="<%=request.getAttribute("my") == null ? request.getContextPath() + "/games?page=" + i :  request.getContextPath() + "/myGames?page=" + i%>">
+                    <%=i%>
+                </a>
+            </li>
+            <% } %>
+        </ul>
+    </nav>
 </main>
 <div id="footer"></div>
 </body>
