@@ -53,7 +53,8 @@
                 <form action='<%=request.getContextPath()+"/game"%>' method="post">
 
                     <label for="newPhrase">Add</label>
-                    <input type="text" class="form-control" id="newPhrase" name="newPhrase">
+                    <input type="text" class="form-control" id="newPhrase" name="newPhrase"
+                           required>
 
                     <div class="text-center my-4">
                         <input class="_button" type="submit" value="Post">

@@ -19,6 +19,16 @@
             $("#header").load("<%=request.getContextPath()%>/jsp/footer_and_header_helper.jsp #header");
             $("#footer").load("<%=request.getContextPath()%>/jsp/footer_and_header_helper.jsp #footer");
         });
+
+        function checkParams() {
+            var message = $('#newMessage').val();
+
+            if (message.length != 0) {
+                $('#submit').removeAttr('disabled');
+            } else {
+                $('#submit').attr('disabled', 'disabled');
+            }
+        }
     </script>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -67,8 +77,8 @@
                 <form action="<%=request.getContextPath() + "/messages"%>" method="post">
                     <input type="text" name="userId" style="display: none" value="<%=request.getAttribute("toUser")%>">
                     <label for="newMessage"></label>
-                    <input type="text" id="newMessage" class="form-control" name="message">
-                    <input type="submit">
+                    <input type="text" id="newMessage" class="form-control" name="message" onkeyup="checkParams()" required>
+                    <input type="submit" disabled>
                 </form>
 
             </div>

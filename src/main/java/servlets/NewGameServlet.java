@@ -40,7 +40,7 @@ public class NewGameServlet extends HttpServlet {
             return;
         }
 
-        req.getRequestDispatcher(req.getContextPath() + "/jsp/new_game.jsp").forward(req, resp);
+        req.getRequestDispatcher(req.getContextPath() + "/jsp/newGame.jsp").forward(req, resp);
     }
 
     @Override

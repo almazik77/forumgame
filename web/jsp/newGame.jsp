@@ -17,6 +17,17 @@
             $("#header").load("<%=request.getContextPath()%>/jsp/footer_and_header_helper.jsp #header");
             $("#footer").load("<%=request.getContextPath()%>/jsp/footer_and_header_helper.jsp #footer");
         });
+
+        function checkParams() {
+            var name = $('#name').val();
+            var description = $('#description').val();
+
+            if (name.length != 0 && description.length != 0) {
+                $('#submit').removeAttr('disabled');
+            } else {
+                $('#submit').attr('disabled', 'disabled');
+            }
+        }
     </script>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -40,8 +51,8 @@
                     <td>Название:<br/></td>
                     <td>&nbsp;</td>
                     <td width="100%">
-                        <input class="text" type="text" maxlength="50" name="game_name"
-                               style=""/>
+                        <input id='name' class="text" type="text" maxlength="50" name="game_name"
+                               style="" onkeyup="checkParams()" required/>
                     </td>
                 </tr>
                 <tr>
@@ -57,11 +68,12 @@
                     <td valign="top">Описание:<br/>
                     </td>
                     <td>&nbsp;</td>
-                    <td><input type="text" style="border-style:dashed;" name="game_description"></td>
+                    <td><input id='description' type="text" style="border-style:dashed;" name="game_description"
+                               onkeyup="checkParams()" required></td>
                 </tr>
                 <tr>
                     <td>
-                        <input type="submit" class="_button" value="Создать игру">
+                        <input type="submit" class="_button" value="Создать игру" disabled>
                     </td>
                 </tr>
 

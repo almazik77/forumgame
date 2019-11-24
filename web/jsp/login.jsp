@@ -17,6 +17,17 @@
             $("#header").load("<%=request.getContextPath()%>/jsp/footer_and_header_helper.jsp #header");
             $("#footer").load("<%=request.getContextPath()%>/jsp/footer_and_header_helper.jsp #footer");
         });
+
+        function checkParams() {
+            var login = $('#login').val();
+            var password = $('#password').val();
+
+            if (login.length != 0 && password.length != 0) {
+                $('#submit').removeAttr('disabled');
+            } else {
+                $('#submit').attr('disabled', 'disabled');
+            }
+        }
     </script>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -47,11 +58,13 @@
             </tr>
             <tr>
                 <td style="width: 200px;">Логин:</td>
-                <td style="width: 300px;"><input class="text" type="text" name="login"/></td>
+                <td style="width: 300px;"><input class="text" type="text" name="login" id="login"
+                                                 onkeyup="checkParams()" required/></td>
             </tr>
             <tr>
                 <td>Пароль:</td>
-                <td><input class="text" type="password" name="password"/></td>
+                <td><input class="text" type="password" name="password" id="password" onkeyup="checkParams()" required/>
+                </td>
             </tr>
 
             <tr>

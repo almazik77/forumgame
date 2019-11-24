@@ -15,10 +15,24 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
         $(function () {
-            $("#header").load("<%=request.getContextPath()%>/footer_and_header_helper.jsp #header");
-            $("#footer").load("<%=request.getContextPath()%>/footer_and_header_helper.jsp #footer");
+            $("#header").load("<%=request.getContextPath()%>/jsp/footer_and_header_helper.jsp #header");
+            $("#footer").load("<%=request.getContextPath()%>/jsp/footer_and_header_helper.jsp #footer");
         });
+
+        function checkParams() {
+            var login = $('#login').val();
+            var email = $('#email').val();
+            var password = $('#password').val();
+            var password2 = $('#password2').val();
+
+            if (login.length != 0 && password.length != 0 && password == password2) {
+                $('#submit').removeAttr('disabled');
+            } else {
+                $('#submit').attr('disabled', 'disabled');
+            }
+        }
     </script>
+
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Bootstrap core CSS -->
@@ -40,24 +54,25 @@
             </tr>
             <tr>
                 <td style="width: 200px;">Логин:</td>
-                <td style="width: 300px;"><input class="text" type="text" name="login" style=""/></td>
+                <td style="width: 300px;"><input class="text" type="text" id='login' name="login" style=""
+                                                 onkeyup="checkParams()"/></td>
             </tr>
             <tr>
                 <td>Пароль:</td>
-                <td><input class="text" type="password" name="password"/></td>
+                <td><input id='password' class="text" type="password" name="password" onkeyup="checkParams()"/></td>
             </tr>
             <tr>
-                <td>Повтор пароля:</td>
-                <td><input class="text" type="password"></td>
+                <td><label for="password2">Повтор пароля:</label></td>
+                <td><input id='password2' class="text" type="password" onkeyup="checkParams()" required></td>
             </tr>
             <tr>
                 <td>E-mail:</td>
-                <td><input class="text" type="text" name="mail"/></td>
+                <td><input id='email' class="text" type="text" name="mail" onkeyup="checkParams()" required/></td>
             </tr>
             <tr>
                 <td></td>
                 <td>
-                    <input type="submit" value="Регистрация"
+                    <input id='submit' type="submit" value="Регистрация" disabled
                            style="background-color:#EAEAEA;border-color:#CCCCCC;border-width:1px;border-style:Dashed;
                    color:#444444;font-family:Tahoma;font-weight:bold;font-size:15px; text-align: center">
                 </td>
