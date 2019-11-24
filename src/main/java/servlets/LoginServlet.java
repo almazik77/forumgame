@@ -19,6 +19,8 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+
         Cookie[] cookies = req.getCookies();
         Cookie cookie = null;
         for (Cookie c : cookies) {
@@ -27,8 +29,8 @@ public class LoginServlet extends HttpServlet {
                 break;
             }
         }
-        if (cookie != null || req.getSession().getAttribute("userId") != null) {
-            resp.sendRedirect(req.getContextPath() + "/profile?userId=" + req.getParameter("userId"));
+        if (req.getSession().getAttribute("userId") != null) {
+            resp.sendRedirect(req.getContextPath() + "/profile");
             return;
         }
         req.getRequestDispatcher(req.getContextPath() + "/jsp/login.jsp").forward(req, resp);
@@ -36,6 +38,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
 
         String login = req.getParameter("login");
         String password = req.getParameter("password");

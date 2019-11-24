@@ -77,8 +77,8 @@
                 <form action="<%=request.getContextPath() + "/messages"%>" method="post">
                     <input type="text" name="userId" style="display: none" value="<%=request.getAttribute("toUser")%>">
                     <label for="newMessage"></label>
-                    <input type="text" id="newMessage" class="form-control" name="message" onkeyup="checkParams()" required>
-                    <input type="submit" disabled>
+                    <input type="text" id="newMessage" class="form-control" name="message" required>
+                    <input type="submit" id="submit">
                 </form>
 
             </div>

@@ -20,6 +20,7 @@ public class GameListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
 
         List<Game> games = gameService.findAll();
 
@@ -30,6 +31,7 @@ public class GameListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         Long gameId = Long.valueOf(req.getParameter("gameId"));
         Long userId = Long.valueOf(req.getParameter("userId"));
         gameService.addUserToGame(userId, gameId);

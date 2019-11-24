@@ -57,4 +57,14 @@ public class GameService {
             gamesRepository.update(game.get());
         }
     }
+
+    public void setLastMessageChecked(Long gameId) {
+        Optional<Game> game = gamesRepository.find(gameId);
+        if (game.isPresent()) {
+            List<Phrase> phrases = game.get().getGameText();
+            if (phrases.size() > 0)
+                phrases.get(phrases.size() - 1).setChecked(true);
+            gamesRepository.update(game.get());
+        }
+    }
 }

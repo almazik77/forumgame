@@ -48,7 +48,8 @@
                     </p>
                 </div>
             </div>
-            <% }%>
+            <% }
+                if (request.getAttribute("canAdd") != null && request.getAttribute("canAdd").equals(Boolean.TRUE)) { %>
             <div class="form-group mt-4">
                 <form action='<%=request.getContextPath()+"/game"%>' method="post">
 
@@ -61,6 +62,15 @@
                     </div>
                 </form>
             </div>
+            <% } else if (request.getAttribute("canCheck") != null && request.getAttribute("canCheck").equals(Boolean.TRUE)) { %>
+            <div class="form-group mt-4">
+                <form action='<%=request.getContextPath()+"/game"%>' method="post">
+                    <div class="text-center my-4">
+                        <input class="_button" type="submit" value="Set last message checked" name="checkLastMessage">
+                    </div>
+                </form>
+            </div>
+            <% }%>
         </section>
         <!--Section: Content-->
     </div>

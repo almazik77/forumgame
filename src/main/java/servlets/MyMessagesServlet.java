@@ -21,6 +21,8 @@ public class MyMessagesServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+
         Long userId = (Long) req.getSession().getAttribute("userId");
         if (userId == null) {
             resp.sendRedirect(req.getContextPath() + "/login");

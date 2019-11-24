@@ -19,6 +19,8 @@ public class NewGameServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+
         Long userId = (Long) req.getSession().getAttribute("userId");
 
         if (userId == null) {
@@ -45,6 +47,8 @@ public class NewGameServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+
         Long moderatorId = (Long) req.getSession().getAttribute("userId");
         String gameName = (String) req.getAttribute("game_name");
         String gameDescription = (String) req.getAttribute("game_description");

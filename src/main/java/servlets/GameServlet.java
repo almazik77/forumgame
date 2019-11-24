@@ -21,6 +21,8 @@ public class GameServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+
         if (req.getParameter("id") == null && req.getSession().getAttribute("gameId") == null) {
             resp.sendRedirect(req.getContextPath() + "/games");
             return;
@@ -44,6 +46,10 @@ public class GameServlet extends HttpServlet {
         }
         Optional<Game> game = gameService.find(gameId);
         if (game.isPresent()) {
+            if (!game.get().getPlayersId().contains(req.getSession().getAttribute("userId"))) {
+                resp.sendRedirect(req.getContextPath() + "/login");
+                return;
+            }
             List<Phrase> phrases = game.get().getGameText();
             List<Long> players = game.get().getPlayersId();
             List<String> statuses = game.get().getPlayerStatus();
@@ -54,7 +60,16 @@ public class GameServlet extends HttpServlet {
             req.setAttribute("players", players);
             req.setAttribute("statuses", statuses);
             req.setAttribute("phrases", phrases);
-
+            if (phrases.size() == 0 || phrases.get(phrases.size() - 1).isChecked()) {
+                req.setAttribute("canAdd", Boolean.TRUE);
+            } else {
+                req.setAttribute("canAdd", Boolean.FALSE);
+            }
+            if (game.get().getModeratorId().equals(req.getSession().getAttribute("userId"))) {
+                req.setAttribute("canCheck", Boolean.TRUE);
+            } else {
+                req.setAttribute("canCheck", Boolean.FALSE);
+            }
             req.getRequestDispatcher(req.getContextPath() + "/jsp/game.jsp").forward(req, resp);
         } else {
             resp.sendRedirect(req.getContextPath() + "/games");
@@ -63,11 +78,17 @@ public class GameServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String newPhrase = req.getParameter("newPhrase");
+        req.setCharacterEncoding("UTF-8");
+
         Long userId = (Long) req.getSession().getAttribute("userId");
         Long gameId = (Long) (req.getSession().getAttribute("gameId"));
-        if (newPhrase != null) {
-            gameService.update(newPhrase, userId, gameId);
+        if (req.getParameter("checkLastMessage") != null) {
+            gameService.setLastMessageChecked(gameId);
+        } else {
+            String newPhrase = req.getParameter("newPhrase");
+            if (newPhrase != null) {
+                gameService.update(newPhrase, userId, gameId);
+            }
         }
         resp.sendRedirect(req.getContextPath() + "/game?gameId=" + gameId);
     }

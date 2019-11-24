@@ -31,7 +31,7 @@
 
 <main>
 
-    <div class="jumbotron-fluid row" style="padding: 5%">
+    <div class="jumbotron-fluid" style="padding: 5%; display: flex">
 
         <div class="col-2 ">
             <a href="<%=request.getContextPath() + "/profile"%>"><span>Профиль</span></a>
@@ -56,7 +56,7 @@
                           enctype="multipart/form-data">
                         <p><label for="avatar" class="_button">Выбрать другой аватар</label>
                             <input type="file" id="avatar" name="file" style="display: none">
-                            <input type="submit" value="Сменить аватар">
+                            <input type="submit" class="_button" value="Сменить аватар">
                         </p>
                     </form>
                     <% } %>
